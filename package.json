@@ -1,0 +1,79 @@
+{
+  "version": "1.0.0",
+  "name": "express-yup",
+  "author": "JP Erasmus",
+  "license": "MIT",
+  "module": "dist/express-yup.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "keywords": [
+    "express",
+    "yup",
+    "middleware",
+    "validation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jperasmus/express-yup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jperasmus/express-yup/issues"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint src",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "express": "^4.17.1",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.7.0",
+    "@types/express": "^4.17.9",
+    "@types/supertest": "^2.0.10",
+    "@types/yup": "^0.29.9",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "husky": "^4.3.0",
+    "np": "^7.0.0",
+    "size-limit": "^4.7.0",
+    "supertest": "^6.0.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5",
+    "yup": "^0.29.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint src --fix"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/express-yup.cjs.production.min.js",
+      "limit": "2 KB"
+    },
+    {
+      "path": "dist/express-yup.esm.js",
+      "limit": "2 KB"
+    }
+  ]
+}
