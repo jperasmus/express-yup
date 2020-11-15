@@ -12,8 +12,14 @@ describe('Express Yup Middleware', () => {
   test('should correctly validate request parameters', async () => {
     const schema = yup.object().shape({
       params: yup.object().shape({
-        param1: yup.string().matches(/howdie/).required(),
-        param2: yup.string().matches(/partner/).required(),
+        param1: yup
+          .string()
+          .matches(/howdie/)
+          .required(),
+        param2: yup
+          .string()
+          .matches(/partner/)
+          .required(),
       }),
     })
 
@@ -29,7 +35,10 @@ describe('Express Yup Middleware', () => {
   test('should correctly validate request headers', async () => {
     const schema = yup.object().shape({
       headers: yup.object().shape({
-        authorization: yup.string().matches(/^Bearer\s\w+$/).required(),
+        authorization: yup
+          .string()
+          .matches(/^Bearer\s\w+$/)
+          .required(),
       }),
     })
 
@@ -37,9 +46,12 @@ describe('Express Yup Middleware', () => {
       res.sendStatus(200)
     })
 
-    return router.get('/auth-header').set('authorization', 'Bearer xxx').then(response => {
-      expect(response.status).toEqual(200)
-    })
+    return router
+      .get('/auth-header')
+      .set('authorization', 'Bearer xxx')
+      .then(response => {
+        expect(response.status).toEqual(200)
+      })
   })
 
   test('should correctly validate body text', async () => {
@@ -141,7 +153,9 @@ describe('Express Yup Middleware', () => {
       .set('Accept', 'text-plain')
       .then(response => {
         expect(response.status).toEqual(400)
-        expect(response.text).toEqual('body must match the following: "/hello/"')
+        expect(response.text).toEqual(
+          'body must match the following: "/hello/"'
+        )
       })
   })
 
@@ -153,7 +167,7 @@ describe('Express Yup Middleware', () => {
     })
 
     const yupOptions = {
-      strict: true
+      strict: true,
     }
 
     // Creating a new Express app instance because you can't have 2 error handler routes
@@ -165,10 +179,16 @@ describe('Express Yup Middleware', () => {
     })
 
     // @ts-expect-error
-    app2.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-      // @ts-ignore
-      res.json({ name: error.name, message: error.message, errors: error.errors })
-    })
+    app2.use(
+      (error: Error, req: Request, res: Response, next: NextFunction) => {
+        // @ts-ignore
+        res.json({
+          name: error.name,
+          message: error.message,
+          errors: error.errors,
+        })
+      }
+    )
 
     return request(app2)
       .post('/yup-options')
@@ -179,10 +199,11 @@ describe('Express Yup Middleware', () => {
         expect(response.status).toEqual(400)
         expect(response.body).toEqual({
           name: 'ValidationError',
-          message: 'body.boolTest must be a `boolean` type, but the final value was: `"true"`.',
+          message:
+            'body.boolTest must be a `boolean` type, but the final value was: `"true"`.',
           errors: [
-            'body.boolTest must be a `boolean` type, but the final value was: `"true"`.'
-          ]
+            'body.boolTest must be a `boolean` type, but the final value was: `"true"`.',
+          ],
         })
       })
   })
