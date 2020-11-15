@@ -178,13 +178,13 @@ describe('Express Yup Middleware', () => {
       res.sendStatus(200)
     })
 
-    // @ts-expect-error
     app2.use(
+      // @ts-expect-error
       (error: Error, req: Request, res: Response, next: NextFunction) => {
-        // @ts-ignore
         res.json({
           name: error.name,
           message: error.message,
+          // @ts-ignore
           errors: error.errors,
         })
       }
